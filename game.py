@@ -26,7 +26,9 @@ surface_bunker.contents = adv.Bag()
 bunker.locked = dict()
 surface_bunker.locked = dict()
 current_room = bunker
+inventory = adv.Bag()
 
+# Define your movement commands
 @adv.when("go DIRECTION")
 @adv.when("north", direction="north")
 @adv.when("south", direction="south")
@@ -133,5 +135,5 @@ def use(item: str):
 
 if __name__=="__main__":
 	look()
-	
+
 	adv.start()
