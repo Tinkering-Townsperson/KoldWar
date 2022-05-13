@@ -12,3 +12,18 @@ Hanging on the east wall are flags of the communist states of the world, forever
 On the north wall there is a ladder leading to a trapdoor with a one-way window.
 """
 )
+
+surface_bunker = adv.Room(
+	"""
+
+"""
+)
+
+bunker.up = surface_bunker
+
+current_room = bunker
+
+if __name__=="__main__":
+	look()
+	
+	adv.start()
