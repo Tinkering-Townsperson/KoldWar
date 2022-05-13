@@ -1,3 +1,8 @@
+"""
+This program is licensed under the GNU Affero General Public License to AfterNoon PM and all contributors
+
+"""
+
 import adventurelib as adv
 
 bunker = adv.Room(
