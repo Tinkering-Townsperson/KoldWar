@@ -16,7 +16,7 @@ On the north wall there is a ladder leading to a trapdoor with a one-way window.
 
 surface_ussr_bunker = adv.Room(
 	"""
-You are on the surface. beneath you lies the nuclear ussr_bunker.
+You are on the surface. beneath you lies the nuclear bunker.
 """
 )
 
@@ -30,7 +30,6 @@ inventory = adv.Bag()
 
 rooms = [ussr_bunker, surface_ussr_bunker]
 
-# Define your movement commands
 @adv.when("go DIRECTION")
 @adv.when("north", direction="north")
 @adv.when("south", direction="south")
@@ -46,17 +45,9 @@ rooms = [ussr_bunker, surface_ussr_bunker]
 @adv.when("d", direction="down")
 
 def go(direction: str):
-	"""Processes your moving direction
-
-	Arguments:
-		direction {str} -- which direction does the player want to move
-	"""
-	# What is your current room?
 	global current_room
-	# Is there an exit in that direction?
 	next_room = current_room.exit(direction)
 	if next_room:
-		# Is the door locked?
 		if direction in current_room.locked and current_room.locked[direction]:
 			print(f"You can't go {direction} --- the door is locked.")
 		else:
@@ -64,49 +55,31 @@ def go(direction: str):
 			print(f"You go {direction}.")
 			look()
 
-	# No exit that way
 	else:
 		print(f"You can't go {direction}.")
 
-# How do you look at the room?
 @adv.when("look")
 def look():
-	"""Looks at the current room"""
-
-	# Describe the room
 	adv.say(current_room)
-
-	# List the contents
 	for item in current_room.contents:
 		print(f"There is {item} here.")
-
-	# List the exits
 	print(f"The following exits are present: {current_room.exits()}")
 
-# How do you look at items?
 @adv.when("look at ITEM")
 @adv.when("inspect ITEM")
 def look_at(item: str):
-
-	# Check if the item is in your inventory or not
 	obj = inventory.find(item)
 	if not obj:
 		print(f"You don't have {item}.")
 	else:
 		print(f"It's an {obj}.")
 
-# How do you pick up items?
 @adv.when("take ITEM")
 @adv.when("get ITEM")
 @adv.when("pickup ITEM")
 @adv.when("pick ITEM up")
 
 def get(item: str):
-	"""Get the item if it exists
-	
-	Arguments:
-		item {str} -- The name of the item to get
-	"""
 	global current_room
 	
 	obj = current_room.contents.take(item)
@@ -120,18 +93,9 @@ def get(item: str):
 @adv.when("unlock door", item="key")
 @adv.when("use ITEM")
 def use(item: str):
-	"""Use an item, consumes it if used
-	
-	Arguments:
-		item {str} -- Which item to use
-	"""
-	
-	# First, do you have the item?
 	obj = inventory.take(item)
 	if not obj:
 		print(f"You don't have {item}")
-	
-	# Try to use the item
 	else:
 		obj.use_item(current_room)
 
@@ -140,9 +104,6 @@ def use(item: str):
 @adv.when("tp PLACE")
 
 def tp(place: str):
-	"""
-	Teleports user
-	"""
 	print(place)
 	
 @adv.when("save")
